@@ -5,8 +5,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#define SUMA 1
-#define RESTA -1
 
 
 typedef struct vector_s{
@@ -15,9 +13,11 @@ typedef struct vector_s{
     float z;
     void (*imprimir)(struct vector_s *v);
     double (*norma)(struct vector_s *v);
-    struct vector_s (*Adicion)(struct vector_s *v1,struct vector_s *v2);
+    struct vector_s (*Adicion)(struct vector_s *v1, struct vector_s *v2);
     float (*producto_interno)(struct vector_s *v1,struct vector_s *v2);
-    struct vector_s (*producto_X)(struct vector_s *v1, struct vector_s *v2);     
+    struct vector_s (*producto_X)(struct vector_s *v1, struct vector_s *v2);
+    struct vector_s (*Escalar)(struct vector_s *v,float k);
+    struct vector_s (*Resta)(struct vector_s*v1,struct vector_s *v2);     
 }vector_t;
 
 /* prototipos */
