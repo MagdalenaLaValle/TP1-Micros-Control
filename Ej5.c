@@ -5,14 +5,14 @@
 #include <stdlib.h>
 
 /* Definiciones y Macros*/
-#define CANTIDAD (uint8_t)10
+#define CANTIDAD (uint8_t)5
 #define BUFFER (uint8_t)20
 #define VALIDO 0
 #define INVALIDO 1
 
 /* Prototipos */
 uint8_t Es_Valido(char c[BUFFER]);
-
+float Promedio(int vec[CANTIDAD],int cant);
 int main(){
     char c[BUFFER] = {0};
     int vec[CANTIDAD] = {0},cant=0;
@@ -50,10 +50,7 @@ int main(){
                     vec[i] = vec[i+1];
                 }
                 vec[CANTIDAD] = atoi(c);
-                promedio=0;
-                for(int i=0;i<CANTIDAD;i++){
-                    promedio += (float) vec[i]/cant;
-                }
+                promedio=Promedio(vec, cant);
             }
             printf("El promedio es: %f \n",promedio);
         }
@@ -63,6 +60,14 @@ int main(){
         printf("Se ha seleccionado EXIT \n**** Fin del Programa ****");
     }
     return 0;
+}
+
+float Promedio(int vec[CANTIDAD],int cant){
+    float prom =0;
+    for(int i =cant;i>0;i--){
+        prom += vec[i];
+    }
+    return prom;
 }
 
 uint8_t Es_Valido(char c[BUFFER]){
