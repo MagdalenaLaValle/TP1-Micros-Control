@@ -1,13 +1,16 @@
+/* Librerias */
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 
+/* Definiciones y Macros*/
 #define CANTIDAD (uint8_t)10
 #define BUFFER (uint8_t)20
 #define VALIDO 0
 #define INVALIDO 1
 
+/* Prototipos */
 uint8_t Es_Valido(char c[BUFFER]);
 
 int main(){
@@ -49,7 +52,7 @@ int main(){
                 vec[CANTIDAD] = atoi(c);
                 promedio=0;
                 for(int i=0;i<CANTIDAD;i++){
-                    promedio += vec[i]/cant;
+                    promedio += (float) vec[i]/cant;
                 }
             }
             printf("El promedio es: %f \n",promedio);
