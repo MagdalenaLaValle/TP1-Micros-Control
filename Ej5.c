@@ -27,6 +27,7 @@ int main(){
     }
 
     while(strcmp(c,"EXIT") != 0){ //mientras que c no sea EXIT estara dentro del while
+        // lo consideramos case sensitive, es decir solo toma EXIT, no eXiT ni exit ni ninguna otra combinacion
         printf("Ingrese numeros enteros y se calculara el promedio de los ultimos %d numeros ingresados\n", CANTIDAD);
         printf("Para salir ingrese EXIT\n");
         fflush(stdin); //limpio el buffer del teclado
