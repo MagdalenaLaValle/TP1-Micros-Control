@@ -132,10 +132,10 @@ void MX_GPIO_Init(void){
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOA, TRANS_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, TRANSISTOR_PIN, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin : PA10 */
-	TRANS_Conf.Pin = TRANS_PIN;
+	TRANS_Conf.Pin = TRANSISTOR_PIN;
 	TRANS_Conf.Mode = GPIO_MODE_OUTPUT_PP;
 	TRANS_Conf.Pull = GPIO_NOPULL;
 	TRANS_Conf.Speed = GPIO_SPEED_FREQ_LOW;
