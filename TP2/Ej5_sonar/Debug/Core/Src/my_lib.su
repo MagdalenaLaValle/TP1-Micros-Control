@@ -1,0 +1,8 @@
+../Core/Src/my_lib.c:15:9:Hw_Init	8	static
+../Core/Src/my_lib.c:26:6:SystemClock_Config	88	static
+../Core/Src/my_lib.c:58:6:MX_I2C3_Init	8	static
+../Core/Src/my_lib.c:75:6:GPIO_Config	32	static
+../Core/Src/my_lib.c:98:6:TIM2_Config	32	static
+../Core/Src/my_lib.c:126:6:TIM2_IRQHandler	8	static
+../Core/Src/my_lib.c:131:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/my_lib.c:141:6:transmitir	24	static
