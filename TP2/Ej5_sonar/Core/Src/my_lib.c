@@ -1,14 +1,12 @@
 //INCLUDES
 #include "my_lib.h"
 
-
-//VARIABLE GLOBAL
-TIM_HandleTypeDef hledtim ;
-I2C_HandleTypeDef hi2c1 ;
-
 const uint8_t DELAY_1S = 0x8;
 
 uint8_t flag=0;
+
+TIM_HandleTypeDef hledtim ;
+I2C_HandleTypeDef hi2c1 ;
 
 
 //DEFINICIÓN DE FUNCIONES GLOBALES (PÚBLICAS)
@@ -24,7 +22,7 @@ uint8_t Hw_Init(void){
 
 
 //DEFINICIÓN DE FUNCIONES PRIVADAS
-SystemClock_Config(void)
+void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -76,6 +74,7 @@ void MX_I2C1_Init(void){
     Error_Handler();
   }
 }
+
 
 void MX_GPIO_Init(void)
 {
@@ -133,15 +132,9 @@ void TIM2_IRQHandler(void){ //TIM2 IRQ definition
 }
 
 void Error_Handler(void){
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
-  /* USER CODE END Error_Handler_Debug */
 }
 
-void transmitir(uint16_t DevAddress, uint8_t *pData, uint16_t Size){
-	HAL_I2C_Master_Transmit(&hi2c3, DevAddress, &pData, Size, DELAY_1S);
-}

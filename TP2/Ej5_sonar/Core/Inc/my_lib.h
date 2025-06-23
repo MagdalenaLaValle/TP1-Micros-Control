@@ -1,6 +1,5 @@
 //Para incializar hardware voy a necesitar todas las cfucniones de la librería HAL
 #include "stm32f4xx_hal.h"
-#include "stm32f401xe.h"
 #include "stm32f4xx_hal_tim.h"
 #include "stm32f4xx_hal_i2c.h"
 //MACROS
@@ -20,7 +19,7 @@
 #define SDA_PIN GPIO_PIN_9 // D14
 #define SCL_PIN GPIO_PIN_8 // D15
 
-//Recordemos que lo único que no va en el .h son variables globales.
+
 //PROTOTIPOS DE FUNCIONES GLOBALES (PÚBLICAS)
 uint8_t Hw_Init(void);
 void SystemClock_Config(void);
