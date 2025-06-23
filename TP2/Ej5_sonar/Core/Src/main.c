@@ -1,17 +1,23 @@
 #include "main.h"
 #include "my_lib.h"
+#include "LCD.h"
 
+extern I2C_HandleTypeDef hi2c1;
 
 int main(void){
-  HAL_Init();
-  SystemClock_Config();
-  MX_GPIO_Init();
-  MX_TIM2_Init();
-  MX_I2C1_Init();
+  Hw_Init();
+
+  HAL_Delay(100);
+  lcd_init();
+
+  // Display example
+  lcd_put_cur(0, 0);
+  lcd_send_string("Distancia:");
+  lcd_put_cur(1, 0);
+  lcd_send_string("numerito");
+
   while (1)
   {
-
+      // Your loop code
   }
-
 }
-
