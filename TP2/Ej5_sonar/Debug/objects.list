@@ -1,4 +1,5 @@
 "./Core/Src/LCD.o"
+"./Core/Src/ULTRASONIC_SENSOR.o"
 "./Core/Src/main.o"
 "./Core/Src/my_lib.o"
 "./Core/Src/stm32f4xx_hal_msp.o"

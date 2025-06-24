@@ -1,0 +1,5 @@
+../Core/Src/ULTRASONIC_SENSOR.c:11:6:SystemClock_Config	88	static
+../Core/Src/ULTRASONIC_SENSOR.c:49:6:GPIO_Init	64	static
+../Core/Src/ULTRASONIC_SENSOR.c:79:6:TIM2_Config	32	static
+../Core/Src/ULTRASONIC_SENSOR.c:115:6:TIM2_IRQHandler	8	static
+../Core/Src/ULTRASONIC_SENSOR.c:148:6:Error_Handler	4	static,ignoring_inline_asm
