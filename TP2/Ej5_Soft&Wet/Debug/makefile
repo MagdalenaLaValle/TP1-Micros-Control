@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Ej1_TP2_Led_Frequency
+BUILD_ARTIFACT_NAME := Ej5_Soft&Wet
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Ej1_TP2_Led_Frequency.elf \
+Ej5_Soft&Wet.elf \
 
 MAP_FILES += \
-Ej1_TP2_Led_Frequency.map \
+Ej5_Soft&Wet.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Ej1_TP2_Led_Frequency.list \
+Ej5_Soft&Wet.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Ej1_TP2_Led_Frequency.elf secondary-outputs
+main-build: Ej5_Soft&Wet.elf secondary-outputs
 
 # Tool invocations
-Ej1_TP2_Led_Frequency.elf Ej1_TP2_Led_Frequency.map: $(OBJS) $(USER_OBJS) C:\Users\Juan\ Bautista\STM32CubeIDE\workspace_1.18.1\Ej1_TP2_Led_Frequency\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Ej1_TP2_Led_Frequency.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Juan Bautista\STM32CubeIDE\workspace_1.18.1\Ej1_TP2_Led_Frequency\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ej1_TP2_Led_Frequency.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Ej5_Soft&Wet.elf Ej5_Soft&Wet.map: $(OBJS) $(USER_OBJS) C:\Users\Juan\ Bautista\.vscode\Microprocesadores\ y\ control\TP1\TP1-Micros-Control\TP2\Ej5_Soft&Wet\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Ej5_Soft&Wet.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Juan Bautista\.vscode\Microprocesadores y control\TP1\TP1-Micros-Control\TP2\Ej5_Soft&Wet\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ej5_Soft&Wet.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Ej1_TP2_Led_Frequency.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Ej1_TP2_Led_Frequency.list"
+Ej5_Soft&Wet.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Ej5_Soft&Wet.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Ej1_TP2_Led_Frequency.elf Ej1_TP2_Led_Frequency.list Ej1_TP2_Led_Frequency.map default.size.stdout
+	-$(RM) Ej5_Soft&Wet.elf Ej5_Soft&Wet.list Ej5_Soft&Wet.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

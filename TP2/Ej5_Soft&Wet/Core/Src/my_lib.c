@@ -6,7 +6,7 @@
 /* Global Variable -----------------------*/
 TIM_HandleTypeDef hledtim; // TIM2 Handler Variable --> Software
 uint8_t flag = 0;
-uint8_t counter1 = 10;
+uint8_t Counter = 0;
 /* Public Function Definitions ------------*/
 
 /* Hardware Configuration */
@@ -19,7 +19,6 @@ uint8_t Hw_Init(void){
 	SystemClock_Config(); // --> Init Hardware
 
 	/* GPIO Configuration */
-	GPIO_Config(); // --> Init Hardware
 
 	/* TIM2 Configuration */
 	TIM2_Config(); // --> Init Hardware
@@ -63,33 +62,6 @@ void SystemClock_Config(void)
   return;
 }
 
-/* GPIO Configuration */
-void GPIO_Config(void){
-
-	GPIO_InitTypeDef LED_Pin_Conf = {0};
-
-	/* GPIO Port Hardware Enable */
-	// --> Hardware
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-
-	/* LED Initial State : OFF */
-	HAL_GPIO_WritePin(LED_PORT, LED_PIN, LED_OFF);
-
-	/* GPIO Pin Features Load */
-	// --> Software
-	LED_Pin_Conf.Pin = LED_PIN;
-	LED_Pin_Conf.Mode = GPIO_MODE_OUTPUT_PP;
-	LED_Pin_Conf.Pull = GPIO_NOPULL;
-	LED_Pin_Conf.Speed = GPIO_SPEED_FREQ_LOW;
-
-	/* GPIO Pin Hardware Configuration */
-	// --> Hardware
-	HAL_GPIO_Init(LED_PORT, &LED_Pin_Conf);
-
-	return;
-}
 
 /* TIM2 Configuration */
 void TIM2_Config(void){
@@ -102,7 +74,7 @@ void TIM2_Config(void){
 	hledtim.Instance = TIMER;
 	hledtim.Init.Prescaler = PRESCALER-1;
 	hledtim.Init.CounterMode = TIM_COUNTERMODE_UP;
-	hledtim.Init.Period = Period(LED_FREQUENCY);
+	hledtim.Init.Period = Period(FREQUENCY);
 	hledtim.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	hledtim.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	/* TIM Hardware Configuration */

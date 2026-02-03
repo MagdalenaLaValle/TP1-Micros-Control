@@ -120,16 +120,14 @@ void TIM2_IRQHandler(void)
 	  if(trigger_counter > 0){
 		  echo_counter = 0;
 		  trigger_counter--;
-		  total_counter --;
 	  }
 	  if(trigger_counter == 0){
 		  HAL_GPIO_WritePin(US_PORT,TRIGGER_PIN,GPIO_PIN_RESET);
-		  total_counter --;
 	  }
 	  if(HAL_GPIO_ReadPin(US_PORT,ECHO_PIN) ==1){
 		  echo_counter ++;
-		  total_counter --;
 	  }
+	  total_counter--;
 
   }
   else{

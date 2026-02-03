@@ -31,7 +31,7 @@ int main(void){
 		  counts = HAL_ADC_GetValue(&hadc1);
 		  // ADC Stop
 		  HAL_ADC_Stop(&hadc1);
-		  adc_running = 0;
+
 		  // Voltage
 		  voltage = counts * ADC_RES;
 		  //Temperature (°C)
@@ -43,6 +43,7 @@ int main(void){
 		  if (temperature < (TEMP_TARGET - DELTA)){
 			  HAL_GPIO_WritePin(TRANSISTOR_PORT, TRANSISTOR_PIN, TRANSISTOR_CLOSE);
 		  }
+		  adc_running = 0;
 	  }
   }
 

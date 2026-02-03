@@ -2,15 +2,11 @@
 #include "stm32f4xx_hal.h"
 
 /* Macros --------------------------------*/
-#define LED_PORT  GPIOA
-#define LED_PIN   GPIO_PIN_10
-#define LED_OFF   GPIO_PIN_RESET
-#define LED_ON    GPIO_PIN_SET
 
 #define TIMER TIM2
 #define CORE_CLK  16000000 // 16 MHz
 #define PRESCALER 1000
-#define LED_FREQUENCY 1000
+#define FREQUENCY 1e7   // seteo la frecuencia para levantar el flag cada 10 us
 #define Period(x)	(-1+(CORE_CLK/(x*PRESCALER))/2)  // Period in [ms] non fractional
 
 

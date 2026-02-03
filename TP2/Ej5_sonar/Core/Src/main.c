@@ -19,7 +19,6 @@ int main(void){
   lcd_put_cur(0, 0);
   lcd_send_string("Distancia:");
   while (1){
-	  /*
 	  if(flag == 1){
 		  lcd_put_cur(1, 0);
 		  lcd_send_string("            "); // limpia fila
@@ -29,7 +28,7 @@ int main(void){
 		  HAL_GPIO_WritePin(US_PORT, TRIGGER_PIN, GPIO_PIN_SET );
 		  flag = 0;
 
-	  }*/
+	  }
 	  HAL_GPIO_WritePin(US_PORT, TRIGGER_PIN, GPIO_PIN_SET );
 
   }
