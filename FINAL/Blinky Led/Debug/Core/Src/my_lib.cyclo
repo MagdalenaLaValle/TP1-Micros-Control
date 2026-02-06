@@ -1,5 +1,0 @@
-../Core/Src/my_lib.c:8:6:SystemClock_Config	1
-../Core/Src/my_lib.c:38:6:MX_GPIO_Init	1
-../Core/Src/my_lib.c:54:6:MX_TIM2_Init	1
-../Core/Src/my_lib.c:82:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/my_lib.c:91:6:TIM2_IRQHandler	1
