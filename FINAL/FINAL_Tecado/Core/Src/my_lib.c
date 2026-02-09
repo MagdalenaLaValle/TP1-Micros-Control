@@ -2,10 +2,12 @@
 
 /* ===== Handle del Timer ===== */
 TIM_HandleTypeDef htim2;
-uint8_t flag_LEER = 0, flag_BLINK = 0;
+uint8_t flag_LEER = 0;
 uint16_t pulse_count = 0;
-uint8_t deBounce_count = 0;
+volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS] = {0};
 #define _max_count 1000;
+volatile uint8_t flag_10ms = 0, flag_100ms = 0, flag_1s = 0;
+volatile uint8_t cnt_10ms = 0, cnt_100ms = 0, cnt_1s = 0;
 
 /* ===== System Clock ===== */
 void SystemClock_Config(void)
@@ -93,7 +95,7 @@ void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = LED_PRESCALER-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = _LedPeriod(80);
+  htim2.Init.Period = Timer_Period;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   HAL_TIM_Base_Init(&htim2);
@@ -122,20 +124,36 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void TIM2_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&htim2);
+    HAL_TIM_IRQHandler(&htim2);
 
-  //PULSOS PARA LEER LA MATRIZ
-  flag_LEER = (flag_LEER == 0) ? 1 : 0;
+    // ---- TICK BASE 1 ms ----
+    //flag_1ms = 1;
 
-  //PULSOS PARA ENCENDER LED
-  pulse_count++;
-  if (pulse_count == 100)
-  {
-	  pulse_count = 0;
-	  flag_BLINK = (flag_BLINK == 0)? 1 : 0;   // levanto flag
-  }
+    // ---- 10 ms ----
+    if(++cnt_10ms >= 10){
+        cnt_10ms = 0;
+        flag_10ms = (flag_10ms == 1)? 0 : 1;
+    }
 
-  //PULSOS PARA DEBOUNCE
-  if(deBounce_count > 0) deBounce_count--;
+    // ---- 100 ms ----
+    if(++cnt_100ms >= 100){
+        cnt_100ms = 0;
+        flag_100ms = 1;
+    }
+
+    // ----- 1s (1000 ms)----
+    if(++cnt_1s >= 100){
+        cnt_1s = 0;
+        flag_1s = 1;
+    }
+
+    // DEBOUNCE TECLADO - CADA 50ms
+    for(int f=0; f<CANT_FILAS; f++){
+        for(int c=0; c<CANT_COLUMNAS; c++){
+            if(deBounce_count[f][c] > 0)
+                deBounce_count[f][c]--;
+        }
+    }
 }
+
 

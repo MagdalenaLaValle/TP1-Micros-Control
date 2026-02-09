@@ -7,7 +7,8 @@
 #define LED_TIMER TIM2
 #define Core_CLK (float) 72000000
 #define LED_PRESCALER 72 // 72MHz/1000 = 72KHz
-#define _LedPeriod(x) (((x * (Core_CLK/1000)) /LED_PRESCALER +1)-1) //Periodo en ms
+//#define _LedPeriod(x) (((x * (Core_CLK/1000)) /LED_PRESCALER +1)-1) //Periodo en ms
+#define Timer_Period 1000
 
 //MACROS LED
 #define LED_PORT  GPIOA
@@ -25,9 +26,10 @@
 #define C2_PIN GPIO_PIN_4 //PB4 D5
 #define C3_PIN GPIO_PIN_5 //PB5 D4
 #define C4_PIN GPIO_PIN_6 //PB6 D10
-#define FILAS 4
-#define COLUMNAS 4
+#define CANT_FILAS 4
+#define CANT_COLUMNAS 4
 #define DeBounce_Delay	5
+#define leer_Delay 1000
 
 //TIPOS DE DATOS
 typedef enum{

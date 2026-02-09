@@ -8,20 +8,11 @@
 //TIPOS DE DATOS
 
 //VARIABLES
-//int filas[FILAS] = {F1, F2, F3, F4};
-//int cols[COLUMNAS] = {C1, C2, C3, C4};
-/*char teclado[FILAS][COLUMNAS] = {
-  {'1', '2', '3', 'A'},
-  {'4', '5', '6', 'B'},
-  {'7', '8', '9', 'C'},
-  {'*', '0', '#', 'D'}
-};*/
 
 //FUNCIONES
-/*matrix_state check_matrix(); //chequea que sólo se esté pulsando un caracter
-char leer_matriz(); //lee la matriz y devuelve el caracter pulsado
-key_state leer_fila(int num_fila);*/
-int leer_A();
-key_state  SWICTH_Filtered(GPIO_TypeDef* GPIO_PORT, uint16_t GPIO_PIN);
+void init_matrix(key_state matrix[CANT_FILAS][CANT_COLUMNAS]);
+void leer_matriz(key_state matrix[CANT_FILAS][CANT_COLUMNAS]);
+key_state SWICTH_Filtered(GPIO_TypeDef* GPIO_PORT, uint16_t GPIO_PIN, int f, int c);
+char get_key_pressed(key_state matrix[CANT_FILAS][CANT_COLUMNAS]);
 
 #endif /*TECLADO_H*/
