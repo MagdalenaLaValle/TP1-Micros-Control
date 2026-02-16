@@ -1,5 +1,8 @@
-../Core/Src/my_lib.c:13:6:SystemClock_Config	1
-../Core/Src/my_lib.c:43:6:MX_GPIO_Init	1
-../Core/Src/my_lib.c:88:6:MX_TIM2_Init	1
-../Core/Src/my_lib.c:116:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/my_lib.c:125:6:TIM2_IRQHandler	7
+../Core/Src/my_lib.c:13:6:MX_I2C1_Init	2
+../Core/Src/my_lib.c:30:6:SystemClock_Config	1
+../Core/Src/my_lib.c:60:6:MX_GPIO_Init	1
+../Core/Src/my_lib.c:102:6:HAL_I2C_MspInit	2
+../Core/Src/my_lib.c:130:6:MX_TIM2_Init	1
+../Core/Src/my_lib.c:158:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/my_lib.c:167:6:TIM2_IRQHandler	7
+../Core/Src/my_lib.c:200:6:Error_Handler	1

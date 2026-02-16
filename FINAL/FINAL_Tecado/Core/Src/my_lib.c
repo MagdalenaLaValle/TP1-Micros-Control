@@ -1,13 +1,30 @@
 #include "my_lib.h"
 
-/* ===== Handle del Timer ===== */
+
 TIM_HandleTypeDef htim2;
+I2C_HandleTypeDef  hi2c1;
 uint8_t flag_LEER = 0;
 uint16_t pulse_count = 0;
 volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS] = {0};
 #define _max_count 1000;
-volatile uint8_t flag_10ms = 0, flag_100ms = 0, flag_1s = 0;
-volatile uint8_t cnt_10ms = 0, cnt_100ms = 0, cnt_1s = 0;
+volatile uint8_t flag_100ms = 0, flag_500ms = 0, flag_1s = 0;
+volatile uint16_t cnt_100ms = 0, cnt_500ms = 0, cnt_1s = 0;
+
+void MX_I2C1_Init(void){
+  hi2c1.Instance = I2C1;
+
+  hi2c1.Init.Timing = 0x2000090E; // 100 kHz típico @8MHz
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK){
+    Error_Handler();
+  }
+}
 
 /* ===== System Clock ===== */
 void SystemClock_Config(void)
@@ -43,45 +60,70 @@ void SystemClock_Config(void)
 void MX_GPIO_Init(void)
 {
 
-	//CONFIGURACIÓN LED
-	GPIO_InitTypeDef LED_Pin_Conf = {0};
+	//CONFIGURACIÓN PARA MOTOR
+	GPIO_InitTypeDef MOTOR_Pin_Conf = {0};
+
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+
+	HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
+
+	MOTOR_Pin_Conf.Pin = MOTOR_PIN;
+	MOTOR_Pin_Conf.Mode = GPIO_MODE_OUTPUT_PP;
+	MOTOR_Pin_Conf.Pull = GPIO_NOPULL;
+	MOTOR_Pin_Conf.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(MOTOR_PORT, &MOTOR_Pin_Conf);
+
+	//CONFIGURACIÓN PARA TECLADO
+	GPIO_InitTypeDef KEY_PORT_FILAS_Conf = {0};
+	GPIO_InitTypeDef KEY_PORT_COLS_Conf = {0};
 
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 
-	HAL_GPIO_WritePin(LED_PORT, LED_PIN, LED_OFF);
+	//Las filas son outputs (las prendo y apago)
+	HAL_GPIO_WritePin(KEY_PORT, F1_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(KEY_PORT, F2_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(KEY_PORT, F3_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(KEY_PORT, F4_PIN, GPIO_PIN_RESET);
 
-	LED_Pin_Conf.Pin = LED_PIN;
-	LED_Pin_Conf.Mode = GPIO_MODE_OUTPUT_PP;
-	LED_Pin_Conf.Pull = GPIO_NOPULL;
-	LED_Pin_Conf.Speed = GPIO_SPEED_FREQ_LOW;
+	KEY_PORT_FILAS_Conf.Pin = F1_PIN | F2_PIN | F3_PIN | F4_PIN;
+	KEY_PORT_FILAS_Conf.Mode = GPIO_MODE_OUTPUT_PP;
+	KEY_PORT_FILAS_Conf.Pull = GPIO_NOPULL;
+	KEY_PORT_FILAS_Conf.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(KEY_PORT, &KEY_PORT_FILAS_Conf);
 
-	HAL_GPIO_Init(LED_PORT, &LED_Pin_Conf);
+	//Las columnas son inputs (las leo)
+	KEY_PORT_COLS_Conf.Pin = C1_PIN | C2_PIN | C3_PIN | C4_PIN;
+	KEY_PORT_COLS_Conf.Mode = GPIO_MODE_INPUT;
+	KEY_PORT_COLS_Conf.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(KEY_PORT, &KEY_PORT_COLS_Conf);
+}
 
-	//CONFIGURACIÓN PARA TECLADO
-	  GPIO_InitTypeDef KEY_PORT_Conf = {0};
+/* ============  I2C  ===============  */
+void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  if(hi2c->Instance==I2C1)
+  {
+  /* USER CODE BEGIN I2C1_MspInit 0 */
 
-	  //Configuración teclado
-	  __HAL_RCC_GPIOB_CLK_ENABLE();
+  /* USER CODE END I2C1_MspInit 0 */
 
-	  HAL_GPIO_WritePin(KEY_PORT, F1_PIN, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(KEY_PORT, F2_PIN, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(KEY_PORT, F3_PIN, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(KEY_PORT, F4_PIN, GPIO_PIN_RESET);
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    /**I2C1 GPIO Configuration
+    PB8     ------> I2C1_SCL
+    PB9     ------> I2C1_SDA
+    */
+    GPIO_InitStruct.Pin = SCL_PIN|SDA_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	  //Las filas son outputs (las prendo y apago)
-	  KEY_PORT_Conf.Pin = F1_PIN | F2_PIN | F3_PIN | F4_PIN;
-	  KEY_PORT_Conf.Mode = GPIO_MODE_OUTPUT_PP;
-	  KEY_PORT_Conf.Pull = GPIO_NOPULL;
-	  KEY_PORT_Conf.Speed = GPIO_SPEED_FREQ_HIGH;
+    /* Peripheral clock enable */
+    __HAL_RCC_I2C1_CLK_ENABLE();
 
-	  HAL_GPIO_Init(KEY_PORT, &KEY_PORT_Conf);
-
-	  //Las columnas son inputs (las leo)
-	  KEY_PORT_Conf.Pin = C1_PIN | C2_PIN | C3_PIN | C4_PIN;
-	  KEY_PORT_Conf.Mode = GPIO_MODE_INPUT;
-	  KEY_PORT_Conf.Pull = GPIO_NOPULL;
-
-	  HAL_GPIO_Init(KEY_PORT, &KEY_PORT_Conf);
+  }
 }
 
 /* ===== TIM2 1 kHz ===== */
@@ -127,24 +169,23 @@ void TIM2_IRQHandler(void)
     HAL_TIM_IRQHandler(&htim2);
 
     // ---- TICK BASE 1 ms ----
-    //flag_1ms = 1;
 
-    // ---- 10 ms ----
-    if(++cnt_10ms >= 10){
-        cnt_10ms = 0;
-        flag_10ms = (flag_10ms == 1)? 0 : 1;
-    }
-
-    // ---- 100 ms ----
+    // ---- 2s ----
     if(++cnt_100ms >= 100){
         cnt_100ms = 0;
-        flag_100ms = 1;
+        flag_100ms = (flag_100ms == 1)? 0 : 1;
     }
 
-    // ----- 1s (1000 ms)----
-    if(++cnt_1s >= 100){
+    // ---- 500 ms ----
+    if(++cnt_500ms >= 500){
+        cnt_500ms = 0;
+        flag_500ms = (flag_500ms == 1)? 0 : 1;
+    }
+
+    // FLAG PARA LEER MATRIZ ----- 1s (1000 ms)
+    if(++cnt_1s >= 1000){
         cnt_1s = 0;
-        flag_1s = 1;
+        flag_1s  = (flag_1s == 1)? 0 : 1;
     }
 
     // DEBOUNCE TECLADO - CADA 50ms
@@ -156,4 +197,6 @@ void TIM2_IRQHandler(void)
     }
 }
 
-
+void Error_Handler(void){
+	while(1);
+}

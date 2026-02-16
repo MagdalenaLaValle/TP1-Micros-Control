@@ -1,0 +1,4 @@
+../Core/Src/teclado.c:18:6:init_matrix	24	static
+../Core/Src/teclado.c:26:11:SWICTH_Filtered	32	static
+../Core/Src/teclado.c:61:6:leer_matriz	32	static
+../Core/Src/teclado.c:71:6:get_key_pressed	32	static

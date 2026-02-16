@@ -29,7 +29,7 @@ Core/Src/stm32f3xx_it.o: ../Core/Src/stm32f3xx_it.c ../Core/Inc/main.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  ../Core/Inc/my_lib.h ../Core/Inc/teclado.h \
  ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h \
- ../Core/Inc/stm32f3xx_it.h
+ ../Core/Inc/LCD.h ../Core/Inc/stm32f3xx_it.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
 ../Core/Inc/stm32f3xx_hal_conf.h:
@@ -62,4 +62,5 @@ Core/Src/stm32f3xx_it.o: ../Core/Src/stm32f3xx_it.c ../Core/Inc/main.h \
 ../Core/Inc/my_lib.h:
 ../Core/Inc/teclado.h:
 ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h:
+../Core/Inc/LCD.h:
 ../Core/Inc/stm32f3xx_it.h:

@@ -3,11 +3,13 @@
 //Variables
 uint8_t flag_matrix = 0;
 const char keymap[CANT_FILAS][CANT_COLUMNAS] = {
-    {'1','2','3','A'},
+	{'1','2','3','A'},
     {'4','5','6','B'},
     {'7','8','9','C'},
     {'*','0','#','D'}
 };
+/*Cada letra va con comillas simples porque cada una es un char de 8bit.
+ * Si el pusiera comillas dobles sería un arrelgo de chars*/
 
 extern volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS];
 uint16_t filas[CANT_FILAS] = {F1_PIN, F2_PIN, F3_PIN, F4_PIN};
@@ -46,18 +48,6 @@ key_state SWICTH_Filtered(GPIO_TypeDef* GPIO_PORT, uint16_t GPIO_PIN, int f, int
 }
 
 
-
-/*void leer_fila(key_state pressed_col[]){
-	int i;
-	uint16_t pin;
-	HAL_GPIO_WritePin(KEY_PORT, F1_PIN, GPIO_PIN_SET);//prendo la fila
-	for(i = 0; i < CANT_COLUMNAS; i++){
-		pin = cols[i];
-		pressed_col[i] = SWICTH_Filtered(KEY_PORT, pin, i);
-	}
-	HAL_GPIO_WritePin(KEY_PORT, F1_PIN, GPIO_PIN_RESET);//cuando termino apago la fila
-}*/
-
 void leer_matriz(key_state matrix[CANT_FILAS][CANT_COLUMNAS]){
     for(int f=0; f<CANT_FILAS; f++){
         HAL_GPIO_WritePin(KEY_PORT, filas[f], GPIO_PIN_SET);
@@ -80,7 +70,6 @@ char get_key_pressed(key_state matrix[CANT_FILAS][CANT_COLUMNAS]){
             }
         }
     }
-
     return detected;
 }
 

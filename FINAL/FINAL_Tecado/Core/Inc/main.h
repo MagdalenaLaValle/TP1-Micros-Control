@@ -9,6 +9,7 @@ extern "C" {
 #include "stm32f3xx_hal.h"
 #include "my_lib.h"
 #include "teclado.h"
+#include "LCD.h"
 
 void Error_Handler(void);
 
