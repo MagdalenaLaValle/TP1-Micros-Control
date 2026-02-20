@@ -10,6 +10,7 @@ extern "C" {
 #include "my_lib.h"
 #include "teclado.h"
 #include "LCD.h"
+#include "FinalCarrera.h"
 
 void Error_Handler(void);
 

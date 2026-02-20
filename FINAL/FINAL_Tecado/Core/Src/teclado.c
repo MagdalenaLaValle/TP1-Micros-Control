@@ -65,7 +65,7 @@ char get_key_pressed(key_state matrix[CANT_FILAS][CANT_COLUMNAS]){
         for(int c=0; c<CANT_COLUMNAS; c++){
             if(matrix[f][c] == _Pressed){
                 if(detected != 0)
-                    return 0; // más de una tecla
+                    return ' '; // más de una tecla
                 detected = keymap[f][c];
             }
         }

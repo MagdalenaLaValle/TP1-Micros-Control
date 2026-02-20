@@ -59,11 +59,11 @@ void SystemClock_Config(void)
 /* ===== GPIO ===== */
 void MX_GPIO_Init(void)
 {
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	//CONFIGURACIÓN PARA MOTOR
 	GPIO_InitTypeDef MOTOR_Pin_Conf = {0};
-
-	__HAL_RCC_GPIOB_CLK_ENABLE();
 
 	HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
 
@@ -73,11 +73,10 @@ void MX_GPIO_Init(void)
 	MOTOR_Pin_Conf.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(MOTOR_PORT, &MOTOR_Pin_Conf);
 
+
 	//CONFIGURACIÓN PARA TECLADO
 	GPIO_InitTypeDef KEY_PORT_FILAS_Conf = {0};
 	GPIO_InitTypeDef KEY_PORT_COLS_Conf = {0};
-
-	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	//Las filas son outputs (las prendo y apago)
 	HAL_GPIO_WritePin(KEY_PORT, F1_PIN, GPIO_PIN_RESET);
@@ -96,6 +95,15 @@ void MX_GPIO_Init(void)
 	KEY_PORT_COLS_Conf.Mode = GPIO_MODE_INPUT;
 	KEY_PORT_COLS_Conf.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(KEY_PORT, &KEY_PORT_COLS_Conf);
+
+
+	//CONFIGURACIÓN PARA FINAL DE CARRERA
+	GPIO_InitTypeDef FINAL_CARRERA_Conf = {0};
+
+	FINAL_CARRERA_Conf.Pin = INICIO_PIN | FINAL_PIN;
+	FINAL_CARRERA_Conf.Mode = GPIO_MODE_INPUT;
+	FINAL_CARRERA_Conf.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(FIN_CARRERA_PORT, &FINAL_CARRERA_Conf);
 }
 
 /* ============  I2C  ===============  */

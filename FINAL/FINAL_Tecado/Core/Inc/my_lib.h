@@ -29,6 +29,9 @@
 #define C4_PIN GPIO_PIN_1 	//PA1	A1
 #define CANT_FILAS 4
 #define CANT_COLUMNAS 4
+#define MAX_TECLAS 3
+#define DELETE_FIL 4
+#define DELETE_COL 4
 #define DeBounce_Delay	5
 #define leer_Delay 1000
 
@@ -37,6 +40,16 @@
 #define SDA_PIN GPIO_PIN_9 	//D8
 #define SCL_PIN GPIO_PIN_8 	//D7
 
+//MACROS FINAL DE CARRERA
+#define FIN_CARRERA_PORT GPIOB
+#define INICIO_PIN	GPIO_PIN_5	//PB5	D4
+#define FINAL_PIN	GPIO_PIN_3	//PB3	D3
+
+//MACROS UART
+#define UART_PORT GPIOA
+#define TX_PIN GPIO_PIN_2 	//PA2	D1
+#define RX_PIN GPIO_PIN_3	//PA3	D0
+
 //TIPOS DE DATOS
 typedef enum{
 	_Pressed,
@@ -44,13 +57,20 @@ typedef enum{
 }key_state;
 
 typedef enum{
-	_Ok,
-	_Multiple_Keys,
-	_No_Keys,
-}matrix_state;
+	_Inicio,
+	_Final,
+	_Medio
+}embolo_state;
+
+typedef enum{
+	_1s,
+	_100ms,
+	_500ms,
+	_Not_Move
+}movement_state;
 
 // Handles externos
-extern TIM_HandleTypeDef htim2;
+//extern TIM_HandleTypeDef htim2;
 
 // Prototipos
 void SystemClock_Config(void);

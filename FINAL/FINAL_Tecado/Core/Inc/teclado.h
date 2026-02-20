@@ -5,8 +5,6 @@
 #include "my_lib.h"
 #include "stm32f3xx_hal_gpio.h"
 
-//TIPOS DE DATOS
-
 //VARIABLES
 
 //FUNCIONES
