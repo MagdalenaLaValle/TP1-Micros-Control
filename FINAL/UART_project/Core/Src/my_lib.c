@@ -44,9 +44,21 @@ void SystemClock_Config(void)
 
 /* ===== GPIO ===== */
 void MX_GPIO_Init(void){
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
+		__HAL_RCC_GPIOB_CLK_ENABLE();
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+		__HAL_RCC_GPIOC_CLK_ENABLE();
 
+
+		//CONFIGURACIÓN PARA MOTOR
+		GPIO_InitTypeDef MOTOR_Pin_Conf = {0};
+
+		HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
+
+		MOTOR_Pin_Conf.Pin = MOTOR_PIN;
+		MOTOR_Pin_Conf.Mode = GPIO_MODE_OUTPUT_PP;
+		MOTOR_Pin_Conf.Pull = GPIO_NOPULL;
+		MOTOR_Pin_Conf.Speed = GPIO_SPEED_FREQ_LOW;
+		HAL_GPIO_Init(MOTOR_PORT, &MOTOR_Pin_Conf);
 }
 
 /* ===== TIM2 1 kHz ===== */
@@ -121,7 +133,7 @@ void TIM2_IRQHandler(void)
 }
 
 void Error_Handler(void){
-	while(1);
+    while(1);
 }
 
 
@@ -143,23 +155,14 @@ void MX_USART1_UART_Init(void){
 
   return;
 }
-
 void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    if(huart->Instance == USART1)    {
+    if(huart->Instance == USART1)
+    {
         __HAL_RCC_USART1_CLK_ENABLE();
         __HAL_RCC_GPIOA_CLK_ENABLE();
-
-        /**USART1 GPIO Configuration
-    	PA9     ------> USART1_TX	D8
-    	PA10     ------> USART1_RX	D10
-    	*/
-        /**USART1 GPIO Configuration
-    	PA2     ------> USART1_TX	D1
-    	PA3     ------> USART1_RX	D0
-    	*/
 
         GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_10;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -167,15 +170,19 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
         GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
         HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+        // 🔴 ESTO TE FALTA
+        HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(USART1_IRQn);
     }
-
-    return;
 }
-
 
 //---------[ UART Data Reception Completion CallBackFunc. ]---------
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
     UART_flag = 1;
     HAL_UART_Receive_IT(&huart1, UART1_rxBuffer, DATA_LENGTH);
     return;
+}
+void USART1_IRQHandler(void){
+    HAL_UART_IRQHandler(&huart1);
 }

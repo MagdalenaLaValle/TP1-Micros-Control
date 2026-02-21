@@ -60,8 +60,8 @@ all: main-build
 main-build: UART_project.elf secondary-outputs
 
 # Tool invocations
-UART_project.elf UART_project.map: $(OBJS) $(USER_OBJS) C:\Users\ACER\STM32CubeIDE\workspace_1.18.1\UART_project\STM32F303RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "UART_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ACER\STM32CubeIDE\workspace_1.18.1\UART_project\STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+UART_project.elf UART_project.map: $(OBJS) $(USER_OBJS) C:\Users\ACER\Documents\ITBA\ -\ Bio\Microprocesadores\ y\ Control\TP1-Micros-Control\FINAL\UART_project\STM32F303RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "UART_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ACER\Documents\ITBA - Bio\Microprocesadores y Control\TP1-Micros-Control\FINAL\UART_project\STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

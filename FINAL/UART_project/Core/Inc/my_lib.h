@@ -14,8 +14,9 @@
 #define Timer_Period 1000
 
 //MACROS LED
-#define MOTOR_PORT  GPIOB
-#define MOTOR_PIN   GPIO_PIN_4 //PB5  D5
+#define MOTOR_PORT  GPIOC
+#define MOTOR_PIN   GPIO_PIN_7 //PB5  D5
+								//PC7 D9
 
 //MACROS TECLADO
 #define KEY_PORT GPIOA
@@ -49,7 +50,7 @@
 #define UART_PORT GPIOA
 #define TX_PIN GPIO_PIN_2 	//PA2	D1
 #define RX_PIN GPIO_PIN_3	//PA3	D0}
-#define DATA_LENGTH 4
+#define DATA_LENGTH 10
 
 //TIPOS DE DATOS
 typedef enum{

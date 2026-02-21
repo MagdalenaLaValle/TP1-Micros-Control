@@ -14,16 +14,18 @@ int main(void){
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
-
+  UART_Transmit_Message();
   HAL_UART_Receive_IT(&huart1, UART1_rxBuffer, DATA_LENGTH);
-
+  UART_Transmit_Message();
   while (1){
-	  if(UART_flag == 1){
-		  HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
-		  //UART_Transmit_Message();
-		  HAL_Delay(100);
-		  UART_flag = 0;
-	  }
+      if(UART_flag == 1){
+          HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_SET);
+          HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
+          UART_Transmit_Message();
+          HAL_Delay(100);
+          HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
+          UART_flag = 0;
+      }
   }
 
 }

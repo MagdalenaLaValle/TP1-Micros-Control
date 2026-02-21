@@ -1,9 +1,10 @@
 ../Core/Src/my_lib.c:16:6:SystemClock_Config	1
 ../Core/Src/my_lib.c:46:6:MX_GPIO_Init	1
-../Core/Src/my_lib.c:53:6:MX_TIM2_Init	1
-../Core/Src/my_lib.c:81:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/my_lib.c:90:6:TIM2_IRQHandler	7
-../Core/Src/my_lib.c:123:6:Error_Handler	1
-../Core/Src/my_lib.c:128:6:MX_USART1_UART_Init	2
-../Core/Src/my_lib.c:147:6:HAL_UART_MspInit	2
-../Core/Src/my_lib.c:177:6:HAL_UART_RxCpltCallback	1
+../Core/Src/my_lib.c:65:6:MX_TIM2_Init	1
+../Core/Src/my_lib.c:93:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/my_lib.c:102:6:TIM2_IRQHandler	7
+../Core/Src/my_lib.c:135:6:Error_Handler	1
+../Core/Src/my_lib.c:140:6:MX_USART1_UART_Init	2
+../Core/Src/my_lib.c:158:6:HAL_UART_MspInit	2
+../Core/Src/my_lib.c:181:6:HAL_UART_RxCpltCallback	1
+../Core/Src/my_lib.c:186:6:USART1_IRQHandler	1
