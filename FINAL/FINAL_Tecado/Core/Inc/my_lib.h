@@ -19,55 +19,52 @@
 
 //MACROS TECLADO
 #define KEY_PORT GPIOA
-#define F1_PIN GPIO_PIN_5 	//PA5 	D13
-#define F2_PIN GPIO_PIN_6 	//PA6 	D12
-#define F3_PIN GPIO_PIN_7 	//PA7 	D11
-#define F4_PIN GPIO_PIN_9 	//PA9 	D8
-#define C1_PIN GPIO_PIN_8	//PA8  	D7
-#define C2_PIN GPIO_PIN_10 	//PA10 	D2
-#define C3_PIN GPIO_PIN_0 	//PA0  	A0
-#define C4_PIN GPIO_PIN_1 	//PA1	A1
+#define F1_PIN GPIO_PIN_5     //PA5     D13
+#define F2_PIN GPIO_PIN_6     //PA6     D12
+#define F3_PIN GPIO_PIN_7     //PA7     D11
+#define F4_PIN GPIO_PIN_2     //PA2     D0
+#define C1_PIN GPIO_PIN_8     //PA8      D7
+#define C2_PIN GPIO_PIN_3     //PA3     D1
+#define C3_PIN GPIO_PIN_0     //PA0      A0
+#define C4_PIN GPIO_PIN_1     //PA1    A1
 #define CANT_FILAS 4
 #define CANT_COLUMNAS 4
-#define MAX_TECLAS 3
-#define DELETE_FIL 4
-#define DELETE_COL 4
-#define DeBounce_Delay	5
+#define DeBounce_Delay    5
 #define leer_Delay 1000
 
 //MACROS LCD
 #define I2C_PORT GPIOB
-#define SDA_PIN GPIO_PIN_9 	//D8
-#define SCL_PIN GPIO_PIN_8 	//D7
+#define SDA_PIN GPIO_PIN_9     //D14
+#define SCL_PIN GPIO_PIN_8     //D15
 
 //MACROS FINAL DE CARRERA
 #define FIN_CARRERA_PORT GPIOB
-#define INICIO_PIN	GPIO_PIN_5	//PB5	D4
-#define FINAL_PIN	GPIO_PIN_3	//PB3	D3
+#define INICIO_PIN    GPIO_PIN_5    //PB5    D4
+#define FINAL_PIN    GPIO_PIN_3    //PB3    D3
 
 //MACROS UART
 #define UART_PORT GPIOA
-#define TX_PIN GPIO_PIN_2 	//PA2	D1
-#define RX_PIN GPIO_PIN_3	//PA3	D0
+#define TX_PIN GPIO_PIN_9     //PA2    D1
+#define RX_PIN GPIO_PIN_10    //PA3    D0
 #define DATA_LENGTH 4
 
 //TIPOS DE DATOS
 typedef enum{
-	_Pressed,
-	_Non_Pressed,
+    _Pressed,
+    _Non_Pressed,
 }key_state;
 
 typedef enum{
-	_Inicio,
-	_Final,
-	_Medio
+    _Inicio,
+    _Final,
+    _Medio
 }embolo_state;
 
 typedef enum{
-	_1s,
-	_100ms,
-	_500ms,
-	_Not_Move
+    _1s,
+    _100ms,
+    _500ms,
+    _Not_Move
 }movement_state;
 
 // Handles externos
