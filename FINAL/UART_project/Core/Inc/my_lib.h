@@ -23,9 +23,9 @@
 #define F1_PIN GPIO_PIN_5 	//PA5 	D13
 #define F2_PIN GPIO_PIN_6 	//PA6 	D12
 #define F3_PIN GPIO_PIN_7 	//PA7 	D11
-#define F4_PIN GPIO_PIN_9 	//PA9 	D8
+#define F4_PIN GPIO_PIN_2	//PA2	D0
 #define C1_PIN GPIO_PIN_8	//PA8  	D7
-#define C2_PIN GPIO_PIN_10 	//PA10 	D2
+#define C2_PIN GPIO_PIN_3	//PA3	D1
 #define C3_PIN GPIO_PIN_0 	//PA0  	A0
 #define C4_PIN GPIO_PIN_1 	//PA1	A1
 #define CANT_FILAS 4
@@ -48,8 +48,8 @@
 
 //MACROS UART
 #define UART_PORT GPIOA
-#define TX_PIN GPIO_PIN_2 	//PA2	D1
-#define RX_PIN GPIO_PIN_3	//PA3	D0}
+#define TX_PIN GPIO_PIN_9 	//PA9	D8
+#define RX_PIN GPIO_PIN_10	//PA10	D9
 #define DATA_LENGTH 10
 
 //TIPOS DE DATOS
@@ -59,17 +59,10 @@ typedef enum{
 }key_state;
 
 typedef enum{
+	_Medio,
 	_Inicio,
-	_Final,
-	_Medio
+	_Final
 }embolo_state;
-
-typedef enum{
-	_1s,
-	_100ms,
-	_500ms,
-	_Not_Move
-}movement_state;
 
 // Handles externos
 //extern TIM_HandleTypeDef htim2;

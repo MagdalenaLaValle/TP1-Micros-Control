@@ -11,6 +11,7 @@ extern "C" {
 #include "teclado.h"
 #include "LCD.h"
 #include "FinalCarrera.h"
+#include "UART.h"
 
 void Error_Handler(void);
 

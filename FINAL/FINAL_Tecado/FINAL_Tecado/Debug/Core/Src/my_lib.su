@@ -1,5 +1,0 @@
-../Core/Src/my_lib.c:13:6:SystemClock_Config	160	static
-../Core/Src/my_lib.c:43:6:MX_GPIO_Init	56	static
-../Core/Src/my_lib.c:88:6:MX_TIM2_Init	40	static
-../Core/Src/my_lib.c:116:6:HAL_TIM_PeriodElapsedCallback	16	static
-../Core/Src/my_lib.c:125:6:TIM2_IRQHandler	16	static

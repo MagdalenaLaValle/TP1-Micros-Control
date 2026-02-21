@@ -2,29 +2,15 @@
 
 
 TIM_HandleTypeDef htim2;
-I2C_HandleTypeDef  hi2c1;
-uint8_t flag_LEER = 0;
-uint16_t pulse_count = 0;
+UART_HandleTypeDef huart1;
+I2C_HandleTypeDef hi2c1;
+
+uint8_t UART1_rxBuffer[DATA_LENGTH] = {0};
+
 volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS] = {0};
-#define _max_count 1000;
-volatile uint8_t flag_100ms = 0, flag_500ms = 0, flag_1s = 0;
+#define _max_count 1000
+volatile uint8_t flag_100ms = 0, flag_500ms = 0, flag_1s = 0, UART_flag = 0;
 volatile uint16_t cnt_100ms = 0, cnt_500ms = 0, cnt_1s = 0;
-
-void MX_I2C1_Init(void){
-  hi2c1.Instance = I2C1;
-
-  hi2c1.Init.Timing = 0x2000090E; // 100 kHz típico @8MHz
-  hi2c1.Init.OwnAddress1 = 0;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK){
-    Error_Handler();
-  }
-}
 
 /* ===== System Clock ===== */
 void SystemClock_Config(void)
@@ -107,6 +93,22 @@ void MX_GPIO_Init(void)
 }
 
 /* ============  I2C  ===============  */
+void MX_I2C1_Init(void){
+  hi2c1.Instance = I2C1;
+
+  hi2c1.Init.Timing = 0x2000090E; // 100 kHz típico @8MHz
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK){
+    Error_Handler();
+  }
+}
+
 void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -167,7 +169,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if (htim->Instance == TIM2)
   {
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+    //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
   }
 }
 
@@ -207,4 +209,53 @@ void TIM2_IRQHandler(void)
 
 void Error_Handler(void){
 	while(1);
+}
+
+void MX_USART1_UART_Init(void){
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  //huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  //huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  return;
+}
+void HAL_UART_MspInit(UART_HandleTypeDef* huart)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    if(huart->Instance == USART1){
+        __HAL_RCC_USART1_CLK_ENABLE();
+        __HAL_RCC_GPIOA_CLK_ENABLE();
+
+        GPIO_InitStruct.Pin =  TX_PIN | RX_PIN;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+        GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+        HAL_GPIO_Init(UART_PORT, &GPIO_InitStruct);
+
+        HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(USART1_IRQn);
+    }
+}
+
+//---------[ UART Data Reception Completion CallBackFunc. ]---------
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+    UART_flag = 1;
+    HAL_UART_Receive_IT(&huart1, UART1_rxBuffer, DATA_LENGTH);
+    return;
+}
+
+void USART1_IRQHandler(void){
+    HAL_UART_IRQHandler(&huart1);
 }

@@ -49,6 +49,7 @@
 #define UART_PORT GPIOA
 #define TX_PIN GPIO_PIN_2 	//PA2	D1
 #define RX_PIN GPIO_PIN_3	//PA3	D0
+#define DATA_LENGTH 4
 
 //TIPOS DE DATOS
 typedef enum{
@@ -79,6 +80,7 @@ void MX_TIM2_Init(void);
 void MX_I2C1_Init(void);
 void TIM2_IRQHandler(void);
 void Error_Handler(void);
+void MX_USART1_UART_Init(void);
 
 
 #endif /* MY_LIB_H */
