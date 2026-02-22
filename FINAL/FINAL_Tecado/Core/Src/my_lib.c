@@ -12,6 +12,18 @@ volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS] = {0};
 volatile uint8_t flag_100ms = 0, flag_500ms = 0, flag_1s = 0, UART_flag = 0;
 volatile uint16_t cnt_100ms = 0, cnt_500ms = 0, cnt_1s = 0;
 
+void Hardware_Init(void){
+  HAL_Init();
+  SystemClock_Config();
+  MX_I2C1_Init();
+  MX_TIM2_Init();
+  MX_GPIO_Init();
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM2_IRQn);
+  MX_USART1_UART_Init();
+}
+
 /* ===== System Clock ===== */
 void SystemClock_Config(void)
 {
@@ -166,9 +178,8 @@ void MX_TIM2_Init(void)
 /* ===== CALLBACK TIMER ===== */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim->Instance == TIM2)
-  {
-    //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+  if (htim->Instance == TIM2){
+
   }
 }
 
@@ -250,6 +261,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
 //---------[ UART Data Reception Completion CallBackFunc. ]---------
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	UART1_rxBuffer[DATA_LENGTH-1] = '\0'; //que el último caracter sea NULL para poder comprar strings después
     UART_flag = 1;
     HAL_UART_Receive_IT(&huart1, UART1_rxBuffer, DATA_LENGTH);
     return;

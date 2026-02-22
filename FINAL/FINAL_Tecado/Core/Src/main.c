@@ -6,9 +6,10 @@ extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart1;
 
 extern uint8_t flag_100ms, flag_500ms, flag_1s, UART_flag;
-extern uint8_t UART1_rxBuffer[DATA_LENGTH];
 
 char tecla_pulsada;
+void Print_lcd(uint8_t row, const char *text);
+void Print_UART(const char *text);
 
 int main(void){
   //LECTURA DEL TECLADO Y LCD
@@ -20,82 +21,113 @@ int main(void){
   uint8_t *selected_flag, dead_flag = 0;
   selected_flag = &dead_flag; // originalmente, no hay ningún flag. Sólo es 0
 
-  HAL_Init();
-  SystemClock_Config();
-  MX_I2C1_Init();
-  MX_TIM2_Init();
-  MX_GPIO_Init();
-  HAL_TIM_Base_Start_IT(&htim2);
-  HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(TIM2_IRQn);
-  MX_USART1_UART_Init();
+  //FINAL DE CARRERA
+  embolo_state embolo = _Inicio, last_embolo = _Inicio;
 
-  UART_Transmit_Message();
+  Hardware_Init();
+
+  Print_UART("Inicializando ");
   HAL_UART_Receive_IT(&huart1, UART1_rxBuffer, DATA_LENGTH);
   HAL_Delay(100);
 
   lcd_init();
-  lcd_put_cur(0, 0);
-  lcd_send_string("Inserte:");
-
+  Print_lcd(0, "Inicializando");
   while (1){
-      if(UART_flag == 1){
-               HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_SET);
-               HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
-               UART_Transmit_Message();
-               HAL_Delay(100);
-               HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
-               UART_flag = 0;
-      }
+	  if(flag_1s == 1){
+		  embolo = detectar_embolo();
+		  if(last_embolo != embolo && embolo!= _Medio){
+			last_embolo = embolo;
+		  }
+	  }
 
-    if (flag_1s==1){ //Con cada pulso del timer, leo la matriz
-        //embolo = detectar_embolo();
-		lcd_put_cur(1, 0);
-		lcd_send_string("entra IF");
-        leer_matriz(pressed_matrix);
-        tecla = get_key_pressed(pressed_matrix);
-        if(last_selection != tecla && tecla!= 0){
-            last_selection = tecla;
-        }
-    }
+	  switch (last_embolo){
+		  	 case _Inicio:
+		  		 Print_lcd(0, "READY TO START");
+		  		 Print_UART("READY TO START ");
+			  if(UART_flag == 1){
+				 tecla = Interpret_UART();
+				 UART_flag = 0;
+			  }
+
+			  else{
+				  leer_matriz(pressed_matrix);
+				  tecla = get_key_pressed(pressed_matrix);
+			  }
+
+			  if(last_selection != tecla && tecla!= 0){
+				  last_selection = tecla;
+			  }
+			  break;
+
+		  	 case _Final:
+		  		 Print_lcd(0, "FINAL");
+		  		 Print_UART("FINAL");
+		  		 selected_flag = &dead_flag;
+			  break;
+
+		  	 case _Medio:
+		  		  Print_lcd(0, "Inyectando");
+		  		  Print_UART("INYECTANDO ");
+				  break;
+	  }
 
      switch (last_selection){
             case '1':
-                lcd_put_cur(0, 9);
-                lcd_send_string("       ");
-                lcd_put_cur(0, 9);
-                lcd_send_string("1s");
+            	Print_lcd(1, "1s");
                 selected_flag = &flag_1s;
                 break;
             case '2':
-                lcd_put_cur(0, 9);
-                lcd_send_string("       ");
-                lcd_put_cur(0, 9);
-                lcd_send_string("500ms");
+            	Print_lcd(1, "500 ms");
                 selected_flag = &flag_500ms;
                 break;
             case '3':
-                lcd_put_cur(0, 9);
-                lcd_send_string("       ");
-                lcd_put_cur(0, 9);
-                lcd_send_string("100ms");
+            	Print_lcd(1, "100 ms");
                 selected_flag = &flag_100ms;
                 break;
-            case 'A':
-                lcd_put_cur(0, 9);
-                lcd_send_string("       ");
-                lcd_put_cur(0, 9);
-                lcd_send_string("INVALID");
+            default:
+            	Print_lcd(1, "Invalid");
                 selected_flag = &dead_flag;
                 break;
      }
-
     if(*selected_flag==1){
         HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_SET);
     }
     else{
         HAL_GPIO_WritePin(MOTOR_PORT, MOTOR_PIN, GPIO_PIN_RESET);
     }
-
   }
+}
+
+
+void Print_lcd(uint8_t row, const char *text)
+{
+    static char last0[17] = "";
+    static char last1[17] = "";
+
+    char *last = (row == 0) ? last0 : last1;
+
+    if(strcmp(last, text) != 0)
+    {
+        lcd_put_cur(row, 0);
+        lcd_send_string("                ");
+        lcd_put_cur(row, 0);
+        lcd_send_string(text);
+        strncpy(last, text, 16);
+        last[16] = '\0';
+    }
+}
+
+
+void Print_UART(const char *text)
+{
+    static char last_msg[64] = "";   // guardamos último mensaje enviado
+
+    if(strcmp(last_msg, text) != 0)
+    {
+        UART_Transmit_Message(text);
+        UART_Transmit_Message("\r\n");   // opcional
+
+        strncpy(last_msg, text, sizeof(last_msg) - 1);
+        last_msg[sizeof(last_msg) - 1] = '\0';
+    }
 }

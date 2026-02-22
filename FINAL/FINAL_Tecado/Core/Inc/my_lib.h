@@ -47,7 +47,7 @@
 #define UART_PORT GPIOA
 #define TX_PIN GPIO_PIN_9     //PA9    D8
 #define RX_PIN GPIO_PIN_10    //PA10   D2
-#define DATA_LENGTH 4
+#define DATA_LENGTH 6
 
 //TIPOS DE DATOS
 typedef enum{
@@ -68,10 +68,9 @@ typedef enum{
     _Not_Move
 }movement_state;
 
-// Handles externos
-//extern TIM_HandleTypeDef htim2;
 
 // Prototipos
+void Hardware_Init(void);
 void SystemClock_Config(void);
 void MX_GPIO_Init(void);
 void MX_TIM2_Init(void);

@@ -12,6 +12,7 @@ extern "C" {
 #include "LCD.h"
 #include "FinalCarrera.h"
 #include "UART.h"
+#include <string.h>
 
 void Error_Handler(void);
 
