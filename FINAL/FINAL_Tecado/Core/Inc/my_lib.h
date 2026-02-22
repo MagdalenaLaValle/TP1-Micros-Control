@@ -13,20 +13,21 @@
 //#define _LedPeriod(x) (((x * (Core_CLK/1000)) /LED_PRESCALER +1)-1) //Periodo en ms
 #define Timer_Period 1000
 
-//MACROS LED
-#define MOTOR_PORT  GPIOB
-#define MOTOR_PIN   GPIO_PIN_4 //PB5  D5
+//MACROS MOTOR
+#define MOTOR_PORT  GPIOA
+#define MOTOR_PIN   GPIO_PIN_8 //PA8  D7
 
 //MACROS TECLADO
-#define KEY_PORT GPIOA
-#define F1_PIN GPIO_PIN_5     //PA5     D13
-#define F2_PIN GPIO_PIN_6     //PA6     D12
-#define F3_PIN GPIO_PIN_7     //PA7     D11
-#define F4_PIN GPIO_PIN_2     //PA2     D0
-#define C1_PIN GPIO_PIN_8     //PA8      D7
-#define C2_PIN GPIO_PIN_3     //PA3     D1
-#define C3_PIN GPIO_PIN_0     //PA0      A0
-#define C4_PIN GPIO_PIN_1     //PA1    A1
+#define KEY_PORT GPIOB
+#define F1_PIN GPIO_PIN_6     //PB6		D10
+#define F2_PIN GPIO_PIN_10    //PB10    D6
+#define F3_PIN GPIO_PIN_4     //PB4    	D5
+#define F4_PIN GPIO_PIN_5     //PB5		D4
+#define C1_PIN GPIO_PIN_3     //PB3    	D3
+#define C2_PIN GPIO_PIN_0     //PB0    	A3
+#define C3_PIN GPIO_PIN_7     //PB7
+#define C4_PIN GPIO_PIN_2     //PB2
+
 #define CANT_FILAS 4
 #define CANT_COLUMNAS 4
 #define DeBounce_Delay    5
@@ -38,14 +39,14 @@
 #define SCL_PIN GPIO_PIN_8     //D15
 
 //MACROS FINAL DE CARRERA
-#define FIN_CARRERA_PORT GPIOB
-#define INICIO_PIN    GPIO_PIN_5    //PB5    D4
-#define FINAL_PIN    GPIO_PIN_3    //PB3    D3
+#define FIN_CARRERA_PORT 	GPIOA
+#define INICIO_PIN    		GPIO_PIN_5    //PA5    D13
+#define FINAL_PIN    		GPIO_PIN_6    //PA6    D12
 
 //MACROS UART
 #define UART_PORT GPIOA
-#define TX_PIN GPIO_PIN_9     //PA2    D1
-#define RX_PIN GPIO_PIN_10    //PA3    D0
+#define TX_PIN GPIO_PIN_9     //PA9    D8
+#define RX_PIN GPIO_PIN_10    //PA10   D2
 #define DATA_LENGTH 4
 
 //TIPOS DE DATOS
