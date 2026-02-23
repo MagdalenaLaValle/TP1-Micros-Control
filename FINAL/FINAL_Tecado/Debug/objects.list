@@ -1,3 +1,4 @@
+"./Core/Src/API.o"
 "./Core/Src/FinalCarrera.o"
 "./Core/Src/LCD.o"
 "./Core/Src/UART.o"

@@ -11,21 +11,21 @@ void UART_Transmit_Message(char *message){
 
 char Interpret_UART(void){
 	char selection;
-
-	if (strcmp((char*)UART1_rxBuffer, "1s   ") == 0) {
-	   HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
+	UART_Transmit_Message("\nValor ingresado:");
+	HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
+	if (strcmp((char*)UART1_rxBuffer, "1ms..") == 0) {
 	   selection = '1';
 	 }
-	else if (strcmp((char*)UART1_rxBuffer, "500ms") == 0) {
-	   HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
+	else if (strcmp((char*)UART1_rxBuffer, "2ms..") == 0) {
 	   selection = '2';
 	 }
-	else if (strcmp((char*)UART1_rxBuffer, "100ms") == 0) {
-	   HAL_UART_Transmit(&huart1, UART1_rxBuffer, DATA_LENGTH, 100);
+	else if (strcmp((char*)UART1_rxBuffer, "10ms") == 0) {
 	   selection = '3';
 	 }
+	else if (strcmp((char*)UART1_rxBuffer, "STOPX") == 0) {
+	   selection = '#';
+	 }
 	else{
-		UART_Transmit_Message("VALOR INVALIDO");
 		selection = 'A';
 	}
 

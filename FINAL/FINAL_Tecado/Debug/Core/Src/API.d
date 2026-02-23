@@ -1,5 +1,5 @@
-Core/Src/LCD.o: ../Core/Src/LCD.c ../Core/Inc/my_lib.h \
- ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
+Core/Src/API.o: ../Core/Src/API.c ../Core/Inc/API.h ../Core/Inc/LCD.h \
+ ../Core/Inc/my_lib.h ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
  ../Core/Inc/stm32f3xx_hal_conf.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h \
@@ -29,7 +29,10 @@ Core/Src/LCD.o: ../Core/Src/LCD.c ../Core/Inc/my_lib.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Core/Inc/LCD.h ../Core/Inc/my_lib.h
+ ../Core/Inc/UART.h ../Core/Inc/teclado.h \
+ ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h
+../Core/Inc/API.h:
+../Core/Inc/LCD.h:
 ../Core/Inc/my_lib.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
 ../Core/Inc/stm32f3xx_hal_conf.h:
@@ -61,5 +64,6 @@ Core/Src/LCD.o: ../Core/Src/LCD.c ../Core/Inc/my_lib.h \
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
-../Core/Inc/LCD.h:
-../Core/Inc/my_lib.h:
+../Core/Inc/UART.h:
+../Core/Inc/teclado.h:
+../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h:

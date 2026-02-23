@@ -9,8 +9,8 @@ uint8_t UART1_rxBuffer[DATA_LENGTH] = {0};
 
 volatile uint8_t deBounce_count[CANT_FILAS][CANT_COLUMNAS] = {0};
 #define _max_count 1000
-volatile uint8_t flag_100ms = 0, flag_500ms = 0, flag_1s = 0, UART_flag = 0;
-volatile uint16_t cnt_100ms = 0, cnt_500ms = 0, cnt_1s = 0;
+volatile uint8_t flag_1ms = 0, flag_2ms = 0, flag_10ms = 0, flag_1s = 0, dead_flag = 0, UART_flag = 0;
+volatile uint16_t cnt_1ms = 0, cnt_2ms = 0, cnt_10ms = 0, cnt_1s = 0;
 
 void Hardware_Init(void){
   HAL_Init();
@@ -156,7 +156,7 @@ void MX_TIM2_Init(void)
   __HAL_RCC_TIM2_CLK_ENABLE();
 
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = LED_PRESCALER-1;
+  htim2.Init.Prescaler = TIMER_PRESCALER-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = Timer_Period;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -187,20 +187,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void TIM2_IRQHandler(void)
 {
     HAL_TIM_IRQHandler(&htim2);
+    //SE INNTERRUMPE CADA 0.5ms
 
-    // ---- TICK BASE 1 ms ----
+    // ---- 1 ms (1kHz) ----
+    flag_1ms = (flag_1ms == 0)? 1 : 0;
 
-    // ---- 2s ----
-    if(++cnt_100ms >= 100){
-        cnt_100ms = 0;
-        flag_100ms = (flag_100ms == 1)? 0 : 1;
+    // ---- 2 ms ----
+    if(++cnt_2ms >= 2){
+        cnt_2ms = 0;
+        flag_2ms = (flag_2ms == 0)? 1 : 0;
     }
 
-    // ---- 500 ms ----
-    if(++cnt_500ms >= 500){
-        cnt_500ms = 0;
-        flag_500ms = (flag_500ms == 1)? 0 : 1;
+    // ---- 10 ms ----
+    if(++cnt_10ms >= 10){
+        cnt_10ms = 0;
+        flag_10ms = (flag_10ms == 0)? 1 : 0;
     }
+
 
     // FLAG PARA LEER MATRIZ ----- 1s (1000 ms)
     if(++cnt_1s >= 1000){
@@ -230,8 +233,6 @@ void MX_USART1_UART_Init(void){
   huart1.Init.Mode = UART_MODE_TX_RX;
   huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  //huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  //huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   if (HAL_UART_Init(&huart1) != HAL_OK)
   {
     Error_Handler();

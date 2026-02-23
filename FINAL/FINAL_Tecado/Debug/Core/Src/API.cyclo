@@ -1,0 +1,6 @@
+../Core/Src/API.c:9:6:Print_lcd	3
+../Core/Src/API.c:27:6:Print_UART	2
+../Core/Src/API.c:40:6:Select	5
+../Core/Src/API.c:60:6:print_message	10
+../Core/Src/API.c:91:6:select_motor_flag	10
+../Core/Src/API.c:116:6:control_motor	2

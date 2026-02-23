@@ -6,7 +6,7 @@
  * */
 
 #include "my_lib.h"
-#include "main.h"
+//#include "main.h"
 
 extern uint8_t UART1_rxBuffer[DATA_LENGTH];
 

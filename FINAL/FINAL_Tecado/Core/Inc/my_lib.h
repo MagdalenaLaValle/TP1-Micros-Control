@@ -9,13 +9,13 @@
 //MACROS TIMER
 #define LED_TIMER TIM2
 #define Core_CLK (float) 72000000
-#define LED_PRESCALER 72 // 72MHz/1000 = 72KHz
-//#define _LedPeriod(x) (((x * (Core_CLK/1000)) /LED_PRESCALER +1)-1) //Periodo en ms
-#define Timer_Period 1000
+#define TIMER_PRESCALER 72 // 72MHz/1000 = 72KHz
+#define Timer_Period 499 // 0.5 ms (2 kHz)
 
-//MACROS MOTOR
+//MACROS MOTORs
 #define MOTOR_PORT  GPIOA
 #define MOTOR_PIN   GPIO_PIN_8 //PA8  D7
+#define RPS(period) ((1/period)/200) //STEP = 1.8° -> 200 pasos por revolución
 
 //MACROS TECLADO
 #define KEY_PORT GPIOB

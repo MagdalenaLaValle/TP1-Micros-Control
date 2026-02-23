@@ -1,6 +1,8 @@
 #ifndef INC_LCD_H_
 #define INC_LCD_H_
 
+#include "my_lib.h"
+
 //Macros
 #define SLAVE_ADDRESS_LCD  0x4E
 
