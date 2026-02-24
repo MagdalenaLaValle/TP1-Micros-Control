@@ -1,6 +1,6 @@
 #include "main.h"
 
-/* Variables Globales --------------------------------------------------------*/
+//Variables Globales
 extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart1;
 extern uint8_t flag_1ms, flag_2ms, flag_10ms, flag_1s, UART_flag;
@@ -48,6 +48,7 @@ int main(void){
 		 case _Medio:
 			  Print_lcd(0, "INYECTANDO");
 			  Print_UART("INYECTANDO ");
+			  Select();
 			  break;
 		}
 

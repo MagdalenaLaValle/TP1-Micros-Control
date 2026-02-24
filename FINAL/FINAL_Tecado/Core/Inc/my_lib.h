@@ -30,7 +30,7 @@
 
 #define CANT_FILAS 4
 #define CANT_COLUMNAS 4
-#define DeBounce_Delay    5
+#define DeBounce_Delay  10 //5ms
 #define leer_Delay 1000
 
 //MACROS LCD
@@ -42,12 +42,13 @@
 #define FIN_CARRERA_PORT 	GPIOA
 #define INICIO_PIN    		GPIO_PIN_5    //PA5    D13
 #define FINAL_PIN    		GPIO_PIN_6    //PA6    D12
+#define maxCount_CARRERA	20 //10ms - un poco mayor que el del teclado porque tiene un resorte
 
 //MACROS UART
 #define UART_PORT GPIOA
 #define TX_PIN GPIO_PIN_9     //PA9    D8
 #define RX_PIN GPIO_PIN_10    //PA10   D2
-#define DATA_LENGTH 6
+#define DATA_LENGTH 5
 
 //TIPOS DE DATOS
 typedef enum{

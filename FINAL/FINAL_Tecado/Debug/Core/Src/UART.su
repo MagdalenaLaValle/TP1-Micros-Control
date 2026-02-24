@@ -1,2 +1,3 @@
 ../Core/Src/UART.c:8:6:UART_Transmit_Message	16	static
-../Core/Src/UART.c:12:6:Interpret_UART	16	static
+../Core/Src/UART.c:12:6:limpiar_buffer	16	static
+../Core/Src/UART.c:18:6:Interpret_UART	16	static

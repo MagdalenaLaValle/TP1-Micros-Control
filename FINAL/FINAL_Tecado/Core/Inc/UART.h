@@ -12,6 +12,7 @@ extern uint8_t UART1_rxBuffer[DATA_LENGTH];
 
 //Prototipos de funciones
 void UART_Transmit_Message(char *message);
+void limpiar_buffer(void);
 char Interpret_UART(void);
 
 
